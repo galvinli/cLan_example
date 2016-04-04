@@ -1,0 +1,4 @@
+40-59 8 * * * ifconfig ath0 up
+* 8-13 * * * ifconfig ath0 up
+0-40 14 * * * ifconfig ath0 up
+41 14 * * * ifconfig ath0 down
