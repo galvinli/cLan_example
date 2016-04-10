@@ -75,8 +75,8 @@ return 0;
 #ifdef QSORT
 
 int cmpW(const void *p1, const void *p2){
-	std *fp1=(std *)p1;	/*p1 will point to A[i], it exit 2 ID, A[i][0] and A[i][1]*/
-	std *fp2=(std *)p2;
+	const std *fp1=(const std *)p1;	/*p1 will point to A[i], it exit 2 ID, A[i][0] and A[i][1]*/
+	const std *fp2=(const std *)p2;
 	float ans=0;
 	ans = fp1->W - fp2->W;
 	ans = (MIN_NUM == 1) ? ans : -ans;
@@ -85,8 +85,8 @@ int cmpW(const void *p1, const void *p2){
 }
 
 int cmpH(const void *p1, const void *p2){
-	std *fp1=(std *)p1;
-	std *fp2=(std *)p2;
+	const std *fp1=(const std *)p1;
+	const std *fp2=(const std *)p2;
 	float ans=0;
 	ans = fp1->H - fp2->H;
 	ans = (MIN_NUM == 1) ? ans : -ans;
