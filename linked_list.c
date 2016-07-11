@@ -35,16 +35,14 @@ void showNode(const node* p){
 	printf("\n");
 }
 
-void addNode( node* pre_Node, node* new_Node){
-	node *p=NULL;
-	p=pre_Node;
+void pushBack( node* pre_Node, node* new_Node){
 
-	while(p->next != NULL){
-		p=p->next;
-	}	
+	while(pre_Node->next != NULL){
+		pre_Node=pre_Node->next;
+		DEBUG_PRINT("per_Node date:%d\n", pre_Node->date);
+	}
 
-	if(p->next == NULL)
-	    p->next=new_Node;
+	pre_Node->next=new_Node;
 }
 
 void insertNode( node* aNode, node* bNode, node* newNode){
@@ -149,8 +147,8 @@ int main(){
 	if(pHead4 == NULL)
 	    printf("linked fail\n");
 
-/*Back add Node*/
-	addNode(pHead, pHead2);
+/*Back Insertion*/
+	pushBack(pHead, pHead2);
 
 	printf("Node1 - Node2 - End\n");
 	showNode(pHead);
