@@ -59,46 +59,101 @@ void insertNode( node* aNode, node* bNode, node* newNode){
 
 	if(newNode->next == NULL){
 		newNode->next=bNode;
-	}else{
-		printf("fail to insertNode\n");
-	}	
+	}else
+	    printf("fail to insertNode\n");
+		
 
 }
 
+node* pushFront( node* pre_Node, node* newNode ){
+
+	while(newNode->next != NULL){
+		newNode=newNode->next;
+		DEBUG_PRINT("newNode date:%d\n", newNode->date);
+	}
+
+	if(pre_Node != NULL){
+	    if(newNode->next == NULL)
+	        newNode->next = pre_Node;
+	    else
+	        printf("faile to insertNode\n");
+
+	}
+	else
+		printf("Invalid Node %s\n", __func__);
+
+        return newNode;
+}
+
+node* eraseFront(node* per_Node){
+	node *p=NULL;
+
+	if(per_Node != NULL){
+	   p=per_Node->next;
+	   free(per_Node);
+	}
+	else
+	  printf("Invalid Node %s\n.", __func__);
+
+	return p;
+		
+}
+
+void eraseBack(node* pNode){
+	node *pTmp=NULL;
+
+	while(pNode->next != NULL){
+		pTmp=pNode;
+		pNode=pNode->next;
+		DEBUG_PRINT("pTmp date:%d\n", pTmp->date);
+		DEBUG_PRINT("per_Node date:%d\n", pNode->date);
+	}
+
+	pTmp->next=NULL;
+	free(pNode);
+	
+}
+
 int main(){
-	node *pHead=NULL;
-	node *pHead2=NULL;
-	node *pHead3=NULL;
+	node *pHead=NULL, *pHead2=NULL, *pHead3=NULL, \
+		*pHead4=NULL;
 	node *p=NULL;
 	int i=0;
 
-	/*Not only number. Add date list you want.*/
+	/*Not only number. Add data as you wish .*/
+/*pHead create*/	
 	for(i=5;i>0;i--)	
 	    pHead=createNode(i,pHead);
 	DEBUG_PRINT("pHead: ");SHOW_NOTE(pHead);
 	
 	if(pHead == NULL)
 	    printf("pHead linked fail\n");
-
+/*pHead2 create*/	
 	for(i=10;i>5;i--)
 	    pHead2=createNode(i,pHead2);
 	DEBUG_PRINT("pHead2: ");SHOW_NOTE(pHead2);
 	
 	if(pHead2 == NULL)
 	    printf("pHead2 linked fail\n");
-
-/*Add Node*/
-	addNode(pHead, pHead2);
-
-	printf("Node1 - Node2 - End\n");
-	showNode(pHead);
-
+/*pHead3 create*/
 	for(i=15;i>10;i--)
 	    pHead3=createNode(i,pHead3);
 	DEBUG_PRINT("pHead3: ");SHOW_NOTE(pHead3);
 	
 	if(pHead3 == NULL)
 	    printf("linked fail\n");
+/*pHead4 create*/
+	    pHead4=createNode(16,pHead4);
+	DEBUG_PRINT("pHead4: ");SHOW_NOTE(pHead4);
+	
+	if(pHead4 == NULL)
+	    printf("linked fail\n");
+
+/*Back add Node*/
+	addNode(pHead, pHead2);
+
+	printf("Node1 - Node2 - End\n");
+	showNode(pHead);
 
 /*Insert Node*/
 	insertNode(pHead->next, pHead->next->next, pHead3);
@@ -110,6 +165,21 @@ int main(){
 	showNode(pHead);
 	
 	DEBUG_PRINT("pHead offest date be: %d\n", pHead->next->next->next->date);
+
+/*Front Insertion*/
+	pHead=pushFront(pHead, pHead4);
+	printf("Hode4 - pre_Node1--Node3--end_Node1 - Node2 - End \n");	
+	showNode(pHead);
+	
+/*Front Erase*/
+	pHead=eraseFront(pHead);
+	printf("pre_Node1--Node3--end_Node1 - Node2 - End \n");	
+	showNode(pHead);
+
+/*Back erasing*/
+	eraseBack(pHead);
+	printf("pre_Node1--Node3--end_Node1 - Node2..() - End \n");
+	showNode(pHead);
 	
 	p=pHead;
 
