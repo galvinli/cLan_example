@@ -1,0 +1,9 @@
+Gen object file from c. 
+    # gcc object_name.o target.c
+
+Date Type size rule.
+
+    sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)
+
+noraml
+    short = 2 Bytes, int = 4 Bytes, long = 4 Bytes, long long = 8 Bytes.
