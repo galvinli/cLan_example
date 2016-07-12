@@ -4,7 +4,7 @@
 
 //#define DEBUG
 #ifdef DEBUG
-#define DEBUG_PRINT(fmt, args...)    printf(fmt, ##args)
+#define DEBUG_PRINT(fmt, args...)    printf("[%s:] "fmt, __func__, ##args)
 #define SHOW_NOTE(x)	showNode(x)
 #else
 #define DEBUG_PRINT(fmt, args...)    /* Don't do anything in release builds */
