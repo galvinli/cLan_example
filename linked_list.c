@@ -10,26 +10,29 @@
 #define DEBUG_PRINT(fmt, args...)    /* Don't do anything in release builds */
 #define SHOW_NOTE(x)
 #endif
+
+typedef enum { FALSE=0, TRUE} boolean;
+
 typedef struct Node{
-	int date;
+	int data;
 	struct Node *next;
 }node;
 
-node* createNode(int date, node* pNode){
+node* createNode(int data, node* pNode){
 	node *p = (node *)malloc(sizeof(node));
 
 	if(p == NULL){
 		printf("fail to allocate mrmory.\n");
 	}
 
-	p->date = date;
+	p->data = data;
 	p->next = pNode;
 	return p;
 }
 
 void showNode(const node* p){
 	while(p != NULL){
-	    printf("%d ", p->date);
+	    printf("%d ", p->data);
 	    p=p->next;
 	}
 	printf("\n");
@@ -39,7 +42,7 @@ void pushBack( node* pre_Node, node* new_Node){
 
 	while(pre_Node->next != NULL){
 		pre_Node=pre_Node->next;
-		DEBUG_PRINT("per_Node date:%d\n", pre_Node->date);
+		DEBUG_PRINT("per_Node data:%d\n", pre_Node->data);
 	}
 
 	pre_Node->next=new_Node;
@@ -52,7 +55,7 @@ void insertNode( node* aNode, node* bNode, node* newNode){
 
 	while(newNode->next != NULL){
 		newNode=newNode->next;
-		DEBUG_PRINT("newNode date:%d\n", newNode->date);
+		DEBUG_PRINT("newNode data:%d\n", newNode->data);
 	}
 
 	if(newNode->next == NULL){
@@ -67,7 +70,7 @@ node* pushFront( node* pre_Node, node* newNode ){
 
 	while(newNode->next != NULL){
 		newNode=newNode->next;
-		DEBUG_PRINT("newNode date:%d\n", newNode->date);
+		DEBUG_PRINT("newNode data:%d\n", newNode->data);
 	}
 
 	if(pre_Node != NULL){
@@ -97,26 +100,71 @@ node* eraseFront(node* per_Node){
 		
 }
 
-void eraseBack(node* pNode){
-	node *pTmp=NULL;
+node* searchPreNode(node* pNode, node* key){
 
-	while(pNode->next != NULL){
-		pTmp=pNode;
-		pNode=pNode->next;
-		DEBUG_PRINT("pTmp date:%d\n", pTmp->date);
-		DEBUG_PRINT("per_Node date:%d\n", pNode->date);
+	while(pNode != NULL){
+	    if(pNode->next == key){
+		DEBUG_PRINT("0x%x, 0x%x \n", (unsigned int)pNode->next,
+			       	(unsigned int)key);	
+	        return pNode;
+	    }
+	    pNode=pNode->next;
 	}
 
-	pTmp->next=NULL;
-	free(pNode);
+	return NULL;
+}
+
+node* searchDate(node* pNode, int key){
+
+	while( pNode != NULL){
+	    if(pNode->data == key){
+		DEBUG_PRINT("%d, %d \n", pNode->data, key);
+	        return pNode;
+	    }
 	
+	    pNode=pNode->next;
+	}
+	
+	return NULL;	
+}
+
+void eraseBack(node* pNode){
+	node *pErase=NULL;
+	pErase=pNode;
+
+	while(pErase->next != NULL){
+		pErase=pErase->next;
+		DEBUG_PRINT("pErase data:%d\n", pErase->data);
+	}
+
+	pNode=searchPreNode(pNode, pErase);
+
+
+	pNode->next=NULL;
+	free(pErase);
+	
+}
+
+int eraseSpecficNode(node* pNode, int key){
+	node *pErase=NULL;
+
+	pErase=searchDate(pNode,key);
+	if(pErase == NULL)
+	    return FALSE;
+
+	pNode=searchPreNode(pNode, pErase);
+
+	pNode->next=NULL;
+	free(pErase);	
+
+	return TRUE;
 }
 
 int main(){
 	node *pHead=NULL, *pHead2=NULL, *pHead3=NULL, \
 		*pHead4=NULL;
 	node *p=NULL;
-	int i=0;
+	int i=0, key=11;
 
 	/*Not only number. Add data as you wish .*/
 /*pHead create*/	
@@ -162,7 +210,7 @@ int main(){
 	printf("pre_Node1--Node3--end_Node1 - Node2 - End \n");	
 	showNode(pHead);
 	
-	DEBUG_PRINT("pHead offest date be: %d\n", pHead->next->next->next->date);
+	DEBUG_PRINT("pHead offest data be: %d\n", pHead->next->next->next->data);
 
 /*Front Insertion*/
 	pHead=pushFront(pHead, pHead4);
@@ -178,7 +226,13 @@ int main(){
 	eraseBack(pHead);
 	printf("pre_Node1--Node3--end_Node1 - Node2..() - End \n");
 	showNode(pHead);
-	
+/*Remove the specifiec node*/
+
+	if(eraseSpecficNode(pHead, key) == FALSE)
+		printf("No such data is %d", key);
+	else
+		printf("data %d has been removed.", key);
+
 	p=pHead;
 
 	/*delete*/
