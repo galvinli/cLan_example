@@ -164,7 +164,8 @@ int main(){
 	node *pHead=NULL, *pHead2=NULL, *pHead3=NULL, \
 		*pHead4=NULL;
 	node *p=NULL;
-	int i=0, key=11;
+	int i=0;
+	int const key=11;
 
 	/*Not only number. Add data as you wish .*/
 /*pHead create*/	
@@ -228,7 +229,7 @@ int main(){
 	showNode(pHead);
 /*Remove the specifiec node*/
 
-	if(eraseSpecficNode(pHead, key) == FALSE)
+	if(!eraseSpecficNode(pHead, key))
 		printf("No such data is %d", key);
 	else
 		printf("data %d has been removed.", key);
