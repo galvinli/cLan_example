@@ -145,16 +145,23 @@ void eraseBack(node* pNode){
 	
 }
 
-int eraseSpecficNode(node* pNode, int key){
+int eraseSpecficNode(node ** ppNode, node* pNode, int key){
 	node *pErase=NULL;
 
 	pErase=searchDate(pNode,key);
 	if(pErase == NULL)
 	    return FALSE;
 
-	pNode=searchPreNode(pNode, pErase);
+	if(*ppNode == pErase){
+		/*Key is mach first node's data.*/
+	    DEBUG_PRINT("ppNode: 0x%x pErase: 0x%x\n", *ppNode, pErase);
+	    *ppNode=pErase->next;
+	}
+	else{
+	    pNode=searchPreNode(pNode, pErase);
+	    pNode->next=pErase->next;
+	}
 
-	pNode->next=NULL;
 	free(pErase);	
 
 	return TRUE;
@@ -163,9 +170,10 @@ int eraseSpecficNode(node* pNode, int key){
 int main(){
 	node *pHead=NULL, *pHead2=NULL, *pHead3=NULL, \
 		*pHead4=NULL;
+	node** ppHead=&pHead; /*For first node replace.*/
 	node *p=NULL;
 	int i=0;
-	int const key=11;
+	int const key=1;
 
 	/*Not only number. Add data as you wish .*/
 /*pHead create*/	
@@ -228,11 +236,11 @@ int main(){
 	printf("pre_Node1--Node3--end_Node1 - Node2..() - End \n");
 	showNode(pHead);
 /*Remove the specifiec node*/
-
-	if(!eraseSpecficNode(pHead, key))
-		printf("No such data is %d", key);
+	if(!eraseSpecficNode(ppHead, pHead, key))
+		printf("No such data is %d\n", key);
 	else
-		printf("data %d has been removed.", key);
+		printf("data %d has been removed.\n", key);
+	showNode(pHead);
 
 	p=pHead;
 
