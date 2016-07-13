@@ -145,7 +145,7 @@ void eraseBack(node* pNode){
 	
 }
 
-int eraseSpecficNode(node ** ppNode, node* pNode, int key){
+int eraseSpecficNode(node ** ppNode, node* pNode, const int key){
 	node *pErase=NULL;
 
 	pErase=searchDate(pNode,key);
@@ -172,8 +172,7 @@ int main(){
 		*pHead4=NULL;
 	node** ppHead=&pHead; /*For first node replace.*/
 	node *p=NULL;
-	int i=0;
-	int const key=1;
+	int i=0, key=1;
 
 	/*Not only number. Add data as you wish .*/
 /*pHead create*/	
@@ -241,7 +240,6 @@ int main(){
 	else
 		printf("data %d has been removed.\n", key);
 	showNode(pHead);
-
 	p=pHead;
 
 	/*delete*/
