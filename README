@@ -7,3 +7,8 @@ Date Type size rule.
 
 noraml
     short = 2 Bytes, int = 4 Bytes, long = 4 Bytes, long long = 8 Bytes.
+
+sort_HW
+       sorting high and weight.
+       intput: numbers of n
+       H.W.: mean heigh and weight
