@@ -1,0 +1,6 @@
+
+Generate lib.so file.
+    gcc -shared -fPIC  malloc_free_check.c -o malloc_free_check.so -ldl
+Execute objfile and insert LD_PRELOAD
+    LD_PRELOAD=$PWD/malloc_free_check.so ./a.out
+
